@@ -1,8 +1,8 @@
 # jQuery源码学习
 
-最近在学习jQuery的源码，从官网上下载了jQuery的最新版本的源码。自己第一次看源码，也不知道该怎么看，就决定一行一行看起，但是看了几天后发现进度很慢，看起来太费劲了，所以多方找资源，终于在B站上找到了一个很全面的jQuery源码讲解课程[https://www.bilibili.com/video/av38654386?from=searchseid=3995982401834367844]。
+最近在学习jQuery的源码，从官网上下载了jQuery的最新版本的源码。自己第一次看源码，也不知道该怎么看，就决定一行一行看起，但是看了几天后发现进度很慢，看起来太费劲了，所以多方找资源，终于在B站上找到了一个很全面的jQuery源码讲解[课程](https://www.bilibili.com/video/av38654386?from=searchseid=3995982401834367844)。
 
 该课程也比较老了，是以jQuery2.0.3这个版本开始讲起的，总共三十几个小时，所以我还是准备先跟着课程把该版本的源码学习一遍，并且看看老师是怎么分析源码的，然后再回过头去看jQuery最新版的源码。
 
-另外提供一个jQuery所有版本源码的地址[https://code.jquery.com/jquery/]
+另外提供一个jQuery所有版本源码的[地址](https://code.jquery.com/jquery/)
 
