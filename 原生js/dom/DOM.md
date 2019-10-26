@@ -23,12 +23,12 @@
 - children
 
 - contains()：检测传入节点是否是调用节点的后代
-* compareDocumentPosition():返回值：
-  ** 1：无关
-  ** 2：给定节点位于调用节点之前
-  ** 4：给定节点位于调用节点之后
-  ** 8：给定节点是调用节点的祖先
-  ** 16：给定节点是调用节点的后代
+- compareDocumentPosition():返回值：
+    - 1：无关
+    - 2：给定节点位于调用节点之前
+    - 4：给定节点位于调用节点之后
+    - 8：给定节点是调用节点的祖先
+    - 16：给定节点是调用节点的后代
 
 ## 3.操作节点
 - appendChild()
@@ -62,12 +62,12 @@
 - getBoundingClientRect()
 
 ## 7.节点遍历
-* NodeIterator
-  ** nextNode()、previousNode()
+- NodeIterator
+    - nextNode()、previousNode()
 
-* TreeWalker
-  ** nextNode()、previousNode()
-  ** parentNode()、firstChild()、lastChild()、nextSibling()、previousSibling()
+- TreeWalker
+    - nextNode()、previousNode()
+    - parentNode()、firstChild()、lastChild()、nextSibling()、previousSibling()
 
 注意： 第一次调用nextNode()时，如果根节点满足条件，NodeIterator会输出根节点TreeWalker会输出满足条件的下一个节点
 
