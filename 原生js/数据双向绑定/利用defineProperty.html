@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>defineProperty</title>
+</head>
+<body>
+
+<input type="text" id="inputText">
+<script>
+const div = document.getElementById('div')
+const data = {
+  val: 123,
+} 
+
+class Binder {
+  constructor({el, data}) {
+    this.$el = document.getElementById(el)
+    Object.defineProperty(this, 'val', {
+      enumerable: true,
+      configurable: true,
+      get() {
+        return data.val
+      },
+      set(newVal) {
+        data.val = newVal
+        this.watcher(newVal)
+      }
+    })
+    this.watcher(data.val)
+
+    this.observer()    
+  }
+
+  watcher(val){
+    this.$el.value === undefined ? this.$el.innerText = val : this.$el.value = val
+  }
+
+  observer() {
+    this.$el.addEventListener('input', (e) => {
+      this.val = e.target.value
+    })
+  } 
+
+}
+
+// class Binder {
+//   constructor({el, data}) {
+//     this.$el = document.getElementById(el)
+//     const self = this
+//     let val = data.val
+//     self.$el.value === undefined ? self.$el.innerText = val : self.$el.value = val
+    // Object.defineProperty(data, 'val', {
+    //   configurable: true,
+    //   enumerable: false,
+    //   get() {
+    //     return val
+    //   },
+    //   set(newVal) {
+    //     val = newVal
+    //     self.$el.value === undefined ? self.$el.innerText = val : self.$el.value = val
+    //   }
+    // })
+
+//     this.$el.addEventListener('input', e => {
+//       data.val = e.target.value
+//     })
+//   }
+// }
+
+const binder = new Binder({el: 'inputText', data})
+</script>
+</body>
+</html>

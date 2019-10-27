@@ -8,16 +8,25 @@
 </head>
 <body>
 
-<div id="div">
-  111
-  222
-  <span id="span"></span>
-  444
-</div>
-<span>111</span>
 <script>
- const div = document.getElementById('div')
- console.log(div)
+var arr = ['a',['b','c',[7, 8]],2,['d','e','f'],'g',3,4]
+
+function flatArr(arr) {
+  let result = []
+  let each = function(n) {
+    if(Array.isArray(n)) {
+      n.forEach(v => {
+        each(v)
+      })
+    } else {
+      result.push(n)
+    }
+  }
+  each(arr)
+  return result
+}
+
+console.log(flatArr(arr))
 </script>
 </body>
 </html>

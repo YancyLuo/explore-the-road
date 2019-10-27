@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>深拷贝</title>
+</head>
+<body>
+  <a href="https://juejin.im/post/5d6aa4f96fb9a06b112ad5b1#heading-11" target="_blank">
+    深拷贝，参考文章
+  </a>
+<script>
+
+function clone(target, map = new WeakMap()) {
+  const isObject = typeof target
+  const type = {}.toString.call(target)
+
+  // 处理引用类型
+  if((isObject === 'object' && target !== null) || isObject === 'symbol') {
+    let cloneTarget
+    try {
+      // 根据数据的类型创建一个新的相同类型
+      cloneTarget = new target.constructor()
+    } catch(e) {
+      // symbol 
+      return Object(Symbol.prototype.valueOf.call(target)) 
+    }
+    
+    // 防止循环引用
+    if(map.get(target)) {
+      return map.get(target)
+    }
+    map.set(target, {})
+
+    // 正则类型
+    if(type === '[object RegExp]') {
+      return new RegExp(target.source, target.flags)
+    }
+
+    // Set
+    if(type === '[object Set]') {
+      target.forEach(v => {
+        cloneTarget.add(clone(v, map))
+      })
+      return cloneTarget
+    }
+
+    // Map
+    if(type === '[object Map]') {
+      target.forEach((v, k) => {
+        cloneTarget.set(k, clone(v, map))
+      })
+      return cloneTarget
+    }
+
+    // 数组和对象 
+    if(type === '[object Array]' || type === '[object Object]') {
+      for(const key in target) {
+        cloneTarget[key] = clone(target[key], map)
+      }
+      return cloneTarget
+    }
+  } 
+
+  // 基本数据类型和函数直接返回
+  else {
+    return target 
+  }
+}
+</script>
+</body>
+</html>

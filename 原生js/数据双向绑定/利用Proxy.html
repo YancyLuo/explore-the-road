@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Proxy</title>
+</head>
+<body>
+
+<input type="text" id="inputText">
+
+<script>
+
+let data = {
+  val: 123
+}
+
+class Binder {
+  constructor({el, data}) {
+    this.$el = document.getElementById(el)
+
+    this.val = data.val
+    this.proxy = new Proxy(this, {
+      get(target, key) {
+        return target[key]
+      },
+      set(target, key, val) {
+        target.wathcer(val)
+      }
+    })
+
+    this.wathcer(this.val)
+    this.observer()
+  }
+
+  wathcer(newVal) {
+    this.$el.value === undefined ? this.$el.innerText = newVal : this.$el.value = newVal
+  }
+
+  observer() {
+    this.$el.addEventListener('input', e => {
+      this.val = e.target.value
+    })
+  }
+}
+
+const binder = new Binder({el: 'inputText', data})
+</script>
+</body>
+</html>

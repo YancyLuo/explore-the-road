@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+
+
+
+<script>
+var obj = {
+  a:1,
+  b: {
+    c: 2,
+    d: 3,
+    e:[4,5,{
+      f:6,
+      g:7 
+    }]
+  },
+  h: [8,9,10]
+}
+
+var c = clone(obj)
+
+// 需要处理的类型：对象和数组，Set，Map，Regexp
+function clone(target, map = new WeakMap()) {
+  const isObj = typeof target === 'object' && target !== null
+  const type = {}.toString.call(target)
+
+  if(isObj) {
+    let result = target.constructor() 
+
+    if(map.get(target)) {
+      return map.get(target)
+    }
+    map.set(target, result)
+
+    switch(type) {
+      case '[object Object]':
+      case '[object Array]':
+        Reflect.ownKeys(target).forEach(v => {
+          result[v] = clone(target[v], map)
+        })
+        break;
+
+      case '[object Map]': 
+        target.forEach((v, k) => {
+          result.set(k, clone(v, map))
+        })
+        break;
+
+      case '[object Set]':
+        target.forEach(v => {
+          result.add(clone(v, map))
+        })
+        break;
+
+      case '[object RegExp]':
+        return new RegExp(target.source, target.flags)
+        break;
+    }
+
+    return result
+  }
+
+  else {
+    return target
+  }
+}
+</script>
+</body>
+</html>
