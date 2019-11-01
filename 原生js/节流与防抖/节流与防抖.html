@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>节流与防抖</title>
+</head>
+<body>
+
+
+<script>
+// 节流：拉长事件触发的间隔时间
+// 防抖：拉长事件触发完成后，下次触发的时间间隔
+
+
+// 节流
+let throttle = function(func, delay) {
+    let timer = null;
+    return ()=> {
+      if (!timer) {
+        timer = setTimeout(function() {
+          func.apply(this, arguments);
+          timer = null;
+        }, delay);
+      }
+    };
+  };
+  function handle() {
+    console.log(Math.random());
+  }
+  window.addEventListener("scroll", throttle(handle, 1000)); //事件处理函数
+
+  // 防抖
+  function debounce(fn, wait) {
+    var timeout = null;
+    return function() {
+      if (timeout !== null) clearTimeout(timeout);//如果多次触发将上次记录延迟清除掉
+      timeout = setTimeout(()=> {
+          fn.apply(this, arguments);
+          timeout = null;
+        }, wait);
+    };
+  }
+  // 处理函数
+  function handle() {
+    console.log(Math.random());
+  }
+  // 滚动事件
+  window.addEventListener("scroll", debounce(handle, 1000));
+</script>
+</body>
+</html>

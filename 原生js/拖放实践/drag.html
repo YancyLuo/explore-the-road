@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>拖放实践1</title>
+<style type="text/css">
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  body {
+    -webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+user-select:none;
+  }
+  #section {
+    width: 600px;
+    height: 600px;
+    border: 3px solid burlywood;
+    margin: 0 auto;
+    position: relative;
+  }
+  #source {
+    width: 50px;
+    height: 50px;
+    background: pink;
+    cursor: move;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+  #target {
+    width: 100px;
+    height: 100px;
+    background: rgb(64, 22, 177);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+</style>
+</head>
+<body>
+
+<section id="section">
+  <div id="source" draggable="true"></div>
+  <div id="target"></div>
+</section>
+<script>
+
+const source = document.getElementById('source'),
+      target = document.getElementById('target')
+
+source.addEventListener('dragstart', function(ev){
+  const dt = ev.dataTransfer;
+  dt.setData('abc',JSON.stringify({a:1}))
+})
+
+source.addEventListener('dragend', function(ev){
+  console.log(ev.dataTransfer.dropEffect)
+})
+
+target.addEventListener('dragover', function(ev){
+  ev.preventDefault()
+})
+
+
+target.addEventListener('drop', function(ev){
+  console.log(111)
+  // ev.preventDefault()
+  // ev.stopPropagation()
+  ev.target.appendChild(source)
+})
+
+
+</script>
+</body>
+</html>

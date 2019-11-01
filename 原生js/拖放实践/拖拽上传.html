@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>拖拽上传</title>
+<style>
+*{
+  padding: 0;
+  margin: 0;
+}
+</style>
+</head>
+<body>
+
+
+<section style="display: flex;">
+
+
+<div  id="box" style="width: 200px;height: 200px;border: 2px dashed gainsboro;line-height: 200px;text-align: center;font-size: 20px;color: gray;">
+  点击或拖拽上传
+  <input type="file" id="fileInput" multiple style="position: absolute;left:0;visibility: hidden;">
+</div>
+<div class="list" id="list">
+</div>
+</section>
+
+
+<script>
+
+document.addEventListener('drop', function (e) {
+  e.preventDefault()
+})
+document.addEventListener('dragover', function (e) {
+  e.preventDefault()
+})
+const fileInput = document.getElementById('fileInput'),
+      box = document.getElementById('box'),
+      list = document.getElementById('list')
+
+box.addEventListener('click', function(){
+  fileInput.click()
+})
+
+fileInput.addEventListener('change', function(e) {
+  showList(this.files)
+})
+
+box.addEventListener('dragover', function(e){
+  e.stopPropagation()
+  e.preventDefault()
+  e.dataTransfer.dropEffect = 'copy'
+  console.log('dragover')
+})
+
+box.addEventListener('drop', function(e) {
+  e.stopPropagation()
+  e.preventDefault()
+  showList(e.dataTransfer.files)
+})
+
+
+function showList(fileList) {
+  let fragment = document.createDocumentFragment()
+  Array.from(fileList).forEach((v, i) => {
+    let p = document.createElement('p')
+    p.innerText = `${v.name}-${Math.round(v.size / 1024)}kb`
+    fragment.appendChild(p)
+  })
+  list.appendChild(fragment)
+}
+
+</script>
+</body>
+</html>

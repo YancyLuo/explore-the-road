@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>call、apply、bind实现</title>
+</head>
+<body>
+
+
+<script>
+Function.prototype.newCall = function(ctx, ...parameter) {
+  const type = typeof ctx
+  ctx = type === ('object' || type === 'function' ? ctx : {}) || window
+  ctx.fn = this
+  let result = ctx.fn(...parameter)
+  delete ctx.fn
+  return result
+}
+
+Function.prototype.newApply = function(ctx, parameters) {
+  const type = typeof ctx
+  ctx = type === ('object' || type === 'function' ? ctx : {}) || window
+  ctx.fn = this
+  let result = ctx.fn(...parameters)
+  delete ctx.fn
+  return result
+}
+
+Function.prototype.newBind = function(ctx, ...parameter) {
+  const fn = this
+  return function(...inner) {
+    fn.call(ctx, ...inner, ...parameter)
+  }
+}
+
+const obj = {
+  name: 'lyx'
+}
+
+function a (age, sex) {
+  return this.name + age + sex
+}
+
+</script>
+</body>
+</html>
